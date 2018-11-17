@@ -1,0 +1,74 @@
+<!-- <div class="modal fade" #ToDoModel="bs-modal" bsModal id="ToDoModel" tabindex="-1" role="dialog">
+  <div class="backdrop">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form [formGroup]="Form1" class="form-validate form-horizontal">
+          <div class="modal-header">
+            <button type="button" class="close" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label class="col-md-3 control-label">First Name</label>
+              <div class="col-md-8">
+                <input type="text" formControlName="name" class="text" placeholder="FirstName" required>
+                <span class="text-danger" *ngIf="Form1.controls['name'].hasError('required') && (Form1.controls['name'].dirty || Form1.controls['name'].touched)">
+                  Please enter First Name</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label">Last Name</label>
+              <div class="col-md-8">
+                <input type="text" formControlName="lname" class="text" placeholder="LastName" required>
+                <span class="text-danger" *ngIf="Form1.controls['lname'].hasError('required') && (Form1.controls['lname'].dirty || Form1.controls['lname'].touched)">
+                  Please enter Last Name</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label">Mo.No.</label>
+              <div class="col-md-8">
+                <input type="text" formControlName="mo" maxlength="10" class="text" placeholder="Mobile No." required>
+                <span *ngFor="let validation of validation_messages.mo">
+                  <span class="text-danger" *ngIf="Form1.controls['mo'].hasError(validation.type) && (Form1.controls['mo'].dirty || Form1.controls['mo'].touched)">
+                    {{validation.message}}</span>
+                </span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label">Email</label>
+              <div class="col-md-8">
+                <input type="email" formControlName="email" class="text" placeholder="Email" required>
+                <span *ngFor="let validation of validation_messages.email">
+                  <span class="text-danger" *ngIf="Form1.controls['email'].hasError(validation.type) && (Form1.controls['email'].dirty || Form1.controls['email'].touched)">
+                    {{validation.message}}</span>
+                </span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label">Age</label>
+              <div class="col-md-8">
+                <input type="text" formControlName="age" maxlength="3" class="text" placeholder="Age" required>
+                <span *ngFor="let validation of validation_messages.age">
+                  <span class="text-danger" *ngIf="Form1.controls['age'].hasError(validation.type) && (Form1.controls['age'].dirty || Form1.controls['age'].touched)">
+                    {{validation.message}}</span>
+                </span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label">Gender</label>
+              <div class="col-md-8">
+                Male <input type="radio" formControlName="gender" value="Male" class="text" checked>
+                Female <input type="radio" formControlName="gender" value="Female" class="text">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <input type="button" class="btn btn-Basic" value="Back" (click)="Back()">&nbsp;&nbsp;&nbsp;
+            <input type="submit" class="btn btn-primary" [value]="index ? 'Save' : 'Add'" (click)="Save($event,Form1.value)">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div> -->

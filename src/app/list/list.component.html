@@ -1,0 +1,151 @@
+<!-- {{list | json}} -->
+<div class="container">
+  <div class="row">
+    <button type="button" class="btn btn-primary button btn-sm" (click)="Add_New()">
+      <span class="fa fa-plus"></span>&nbsp;Add New</button>
+    <input type="text" class="form-control" placeholder="Search...." [(ngModel)]="filter">
+    <table class="table table-responsive table-bordered table-hover" style="display:table;">
+      <thead>
+        <tr>
+          <th (click)="sort('FirstName')"> FirstName
+            <span class="fa sort-icon" *ngIf="key =='FirstName'" [ngClass]="{'fa-chevron-up':reverse,'fa-chevron-down':!reverse}"></span>
+          </th>
+          <th (click)="sort('LastName')"> LastName
+            <span class="fa sort-icon" *ngIf="key =='LastName'" [ngClass]="{'fa-chevron-up':reverse,'fa-chevron-down':!reverse}"></span>
+          </th>
+          <th (click)="sort('Age')"> Age
+            <span class="fa sort-icon" *ngIf="key =='Age'" [ngClass]="{'fa-chevron-up':reverse,'fa-chevron-down':!reverse}"></span>
+          </th>
+          <th (click)="sort('Gender')"> Gender
+            <span class="fa sort-icon" *ngIf="key =='Gender'" [ngClass]="{'fa-chevron-up':reverse,'fa-chevron-down':!reverse}"></span>
+          </th>
+          <th (click)="sort('Mobile No.')"> Mobile No.
+            <span class="fa sort-icon" *ngIf="key =='Mobile No.'" [ngClass]="{'fa-chevron-up':reverse,'fa-chevron-down':!reverse}"></span>
+          </th>
+          <!-- <th>Img</th> -->
+          <th (click)="sort('Email')"> Email
+            <span class="fa sort-icon" *ngIf="key =='Email'" [ngClass]="{'fa-chevron-up':reverse,'fa-chevron-down':!reverse}"></span>
+          </th>
+          <th (click)="sort('Hobies')"> Hobies
+            <span class="fa sort-icon" *ngIf="key =='Hobies'" [ngClass]="{'fa-chevron-up':reverse,'fa-chevron-down':!reverse}"></span>
+          </th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of list | orderBy: key : reverse | filter:filter | paginate: { itemsPerPage: 2, currentPage: p } ; let i = index">
+          <td>{{item.name}}</td>
+          <td>{{item.lname}}</td>
+          <td>{{item.age}}</td>
+          <td>{{item.gender}}</td>
+          <td>{{item.mo}}</td>
+          <!-- <td>{{item.image}}</td> -->
+          <td>{{item.email}}</td>
+          <td>{{ getAllHobbies(item.hobies)}}</td>
+          <td><button type="button" class="btn btn-success btn-sm" (click)="Edit_Button(item.id)"><span class="fa fa-pencil"></span>&nbsp;Edit</button></td>
+          <td><button type="button" class="btn btn-danger btn-sm" (click)="Delete_Button(item.id)"><span class="fa fa-trash"></span>&nbsp;Delete</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="col-md-12 text-center">
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" #ToDoModel="bs-modal" bsModal id="ToDoModel" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog  modal-md">
+    <div class="modal-content">
+      <form [formGroup]="Form1" class="form-validate form-horizontal" novalidate="">
+        <div class="modal-header">
+          <h4 class="modal-title">{{model_title}}</h4>
+          <button type="button" class="close" aria-label="Close" (click)="Close()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="form-group">
+              <label class="col-md-6 col-lg-6 control-label required">First Name</label>
+              <div class="col-md-12 col-lg-12">
+                <input type="text" formControlName="name" class="form-control" placeholder="FirstName" required>
+                <span class="text-danger" *ngIf="Form1.controls['name'].hasError('required') && (Form1.controls['name'].dirty || Form1.controls['name'].touched)">First
+                  Name required..</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-6 col-lg-6 control-label required">Last Name</label>
+              <div class="col-md-12 col-lg-12">
+                <input type="text" formControlName="lname" class="form-control" placeholder="LastName" required>
+                <span class="text-danger" *ngIf="Form1.controls['lname'].hasError('required') && (Form1.controls['lname'].dirty || Form1.controls['lname'].touched)">Last
+                  Name required..</span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <label class="col-md-6 col-lg-6 control-label required">Mo.No.</label>
+              <div class="col-md-12 col-lg-12">
+                <input type="text" formControlName="mo" maxlength="10" class="form-control" placeholder="Mobile No."
+                  required>
+                <span *ngFor="let validation of validation_messages.mo">
+                  <span class="text-danger" *ngIf="Form1.controls['mo'].hasError(validation.type) && (Form1.controls['mo'].dirty || Form1.controls['mo'].touched)">
+                    {{validation.message}}</span>
+                </span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-6 col-lg-6 control-label required">Age</label>
+              <div class="col-md-12 col-lg-12">
+                <input type="text" formControlName="age" maxlength="3" class="form-control" placeholder="Age" required>
+                <span *ngFor="let validation of validation_messages.age">
+                  <span class="text-danger" *ngIf="Form1.controls['age'].hasError(validation.type) && (Form1.controls['age'].dirty || Form1.controls['age'].touched)">
+                    {{validation.message}}</span>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <label class="col-md-12 col-lg-12 control-label required">Email</label>
+              <div class="col-md-12 col-lg-12">
+                <input type="email" formControlName="email" class="form-control" placeholder="Email" required>
+                <span *ngFor="let validation of validation_messages.email">
+                  <span class="text-danger" *ngIf="Form1.controls['email'].hasError(validation.type) && (Form1.controls['email'].dirty || Form1.controls['email'].touched)">
+                    {{validation.message}}</span>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group radio">
+              <label class="col-md-3 col-lg-3 control-label">Gender</label>
+              <div class="col-md-12 col-lg-12">
+                <label><input type="radio" formControlName="gender" value="Male" checked> Male&nbsp;</label>
+                <label><input type="radio" formControlName="gender" value="Female"> Female&nbsp;</label>
+              </div>
+            </div>
+            <div class="form-group checkbox">
+              <label class="col-md-3 col-lg-3 control-label">Hobies</label>
+              <div class="col-md-12 col-lg-12" formGroupName="hobies">
+                <label><input type="checkbox" formControlName="movies" value="Movies" checked> Movies &nbsp; </label>
+                <label><input type="checkbox" formControlName="cricket" value="cricket"> Cricket &nbsp;</label>
+                <label><input type="checkbox" formControlName="chess" value="Chess"> Chess &nbsp;</label>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="form-group">
+            <img [src]="imageUrl" alt="No Img" style="width:100px;height:100px;"> &nbsp;&nbsp;
+            <input type="file" name="photo" #image accept="image/*" (change)="onFileChange($event)">
+          </div> -->
+        </div>
+        <div class="modal-footer">
+          <input type="button" class="btn btn-Basic" value="Close" (click)="Close()">&nbsp;&nbsp;&nbsp;
+          <input type="submit" class="btn btn-primary" [value]="index ? 'Save' : 'Add'" (click)="Save($event,Form1.value)">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
